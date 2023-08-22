@@ -1,5 +1,6 @@
 package com.example.mycomposem3playground.setup
 
+import com.example.mycomposem3playground.BuildConfig
 import okhttp3.Interceptor
 import okhttp3.logging.HttpLoggingInterceptor
 
@@ -12,9 +13,10 @@ object NetworkModule {
     }
 
     fun basicHeaderInterceptor() = Interceptor {
+        val apiKey = BuildConfig.IMDB_API_KEY
         val request = it.request().newBuilder()
             .addHeader("Content-Type", "application/json")
-            .addHeader("Authorization", "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI0MzVkMGVmNWJlYzFhN2M2YjFlNWVhYzQ3OThkM2Y5NiIsInN1YiI6IjY0YTZkNTAwY2FlNjMyMWIyODM3NDY5OCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.iEBLd4dXlCN8VKL0OObtgT4gCGRAegBq9HkUOBaWGaQ")
+            .addHeader("Authorization", "Bearer $apiKey")
             .build()
         it.proceed(request)
     }
