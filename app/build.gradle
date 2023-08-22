@@ -1,0 +1,104 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+}
+
+android {
+    namespace 'com.example.mycomposem3playground'
+    compileSdk 33
+
+    defaultConfig {
+        applicationId "com.example.mycomposem3playground"
+        minSdk 24
+        targetSdk 33
+        versionCode 1
+        versionName "1.0"
+
+        buildConfigField("String","MOVIEDB_API_KEY","\"435d0ef5bec1a7c6b1e5eac4798d3f96\"")
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables {
+            useSupportLibrary true
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    buildFeatures {
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion '1.4.7'
+    }
+    packagingOptions {
+        resources {
+            excludes += '/META-INF/{AL2.0,LGPL2.1}'
+        }
+    }
+}
+
+dependencies {
+
+    implementation 'androidx.core:core-ktx:1.8.21'
+    def composeBom = platform('androidx.compose:compose-bom:2023.06.01')
+    implementation composeBom
+    androidTestImplementation composeBom
+
+    // Choose one of the following:
+    // Material Design 3
+    implementation 'androidx.compose.material3:material3'
+
+    // Android Studio Preview support
+    implementation 'androidx.compose.ui:ui-tooling-preview'
+    debugImplementation 'androidx.compose.ui:ui-tooling'
+
+    // UI Tests
+    androidTestImplementation 'androidx.compose.ui:ui-test-junit4'
+    debugImplementation 'androidx.compose.ui:ui-test-manifest'
+
+    implementation 'androidx.paging:paging-common-ktx:3.1.1'
+    implementation "androidx.paging:paging-runtime:3.1.1"
+    implementation "androidx.paging:paging-compose:3.2.0-rc01"
+
+    implementation "androidx.navigation:navigation-compose:2.6.0"
+
+    // Optional - Included automatically by material, only add when you need
+    // the icons but not the material library (e.g. when using Material3 or a
+    // custom design system based on Foundation)
+    implementation 'androidx.compose.material:material-icons-core'
+    // Optional - Add full set of material icons
+    implementation 'androidx.compose.material:material-icons-extended'
+    // Optional - Add window size utils
+    implementation 'androidx.compose.material3:material3-window-size-class'
+
+    // Optional - Integration with activities, viemodels,livedata
+    implementation 'androidx.activity:activity-compose:1.7.2'  //necessary for composable in activities
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1' //necessary for viewmodelScope
+    implementation "androidx.lifecycle:lifecycle-runtime-compose:2.6.1" //necessary for collectAsStateWithLifeCycle
+    implementation 'androidx.compose.runtime:runtime-livedata'
+    /*
+    implementation 'androidx.compose.runtime:runtime-livedata'
+     */
+
+    implementation 'io.coil-kt:coil-compose:2.4.0'
+
+    //implementation 'org.koin:koin-core:1.0.2'  //3.4.0
+    //implementation 'org.koin:koin-android-viewmodel:1.0.2'
+    implementation 'io.insert-koin:koin-androidx-compose:3.4.3'
+    api "com.squareup.retrofit2:retrofit:${libVersions.retrofit}"
+    api "com.squareup.retrofit2:converter-gson:${libVersions.retrofit}"
+    api "com.squareup.okhttp3:okhttp:${libVersions.okHttp}"
+    api "com.squareup.okhttp3:logging-interceptor:${libVersions.okHttp}"
+
+}
