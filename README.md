@@ -4,7 +4,7 @@ IMDB movies browser written in kotlin + jepack compose
 This is the famous "popular movie" app useful to browse IMDB movies.
 It's made with kotlin and jetpack Compose for Android
 
-## Some flutter and dart libraries used in project:
+## Some libraries used in project:
 
 **Retrofit** (rest library)  
 **Jetpack Paging Library** (infinite scrolling grid)  
