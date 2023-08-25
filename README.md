@@ -9,7 +9,7 @@ It's made with kotlin and jetpack Compose for Android
 **Retrofit** (rest library)  
 **Jetpack Paging Library** (infinite scrolling grid)  
 **Koin compose** (dependency injection)  
-**Room** (for storage)
+**Room** (for storage)  
 **Coil** (for displaying images)
 
 
