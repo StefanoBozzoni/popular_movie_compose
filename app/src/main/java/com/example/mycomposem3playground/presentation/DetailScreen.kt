@@ -27,10 +27,13 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -50,6 +53,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
 import androidx.core.content.ContextCompat.startActivity
+import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import coil.size.Size
@@ -59,9 +63,11 @@ import com.example.mycomposem3playground.W185
 import com.example.mycomposem3playground.W500
 import com.example.mycomposem3playground.YOUTUBE_TN_URL
 import com.example.mycomposem3playground.YOUTUBE_TRAILERS_URL
+import com.example.mycomposem3playground.data.local.model.FavoritesItem
 import com.example.mycomposem3playground.data.remote.dtos.Movie
 import com.example.mycomposem3playground.domain.model.MovieDetailInfo
 import com.example.mycomposem3playground.presentation.ui.theme.MyComposeM3PlayGroundTheme
+import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -78,16 +84,16 @@ fun DetailScreen(viewModelInstance: MainViewModel = koinViewModel(), movieId: In
     DetailContent(result)
     */
 
-    //per chiamare un servizio, secondo metodo:
+    //per chiamare un servizio, secondo metodo, usando produceState per chiamare una funzione sospesa:
     val result by produceState<MovieDetailInfo?>(initialValue = null) {
         value = viewModelInstance.suspendGetSingleMovie(movieId)
     }
-    DetailContent(result)
+    DetailContent(result, viewModelInstance)
 }
 
 
 @Composable
-fun DetailContent(movieDetailInfo: MovieDetailInfo?) {
+fun DetailContent(movieDetailInfo: MovieDetailInfo?, viewModelInstance: MainViewModel) {
     if (movieDetailInfo == null) return
 
     var favBtnClicked by rememberSaveable{
@@ -97,6 +103,7 @@ fun DetailContent(movieDetailInfo: MovieDetailInfo?) {
     val myMovie = movieDetailInfo.movie
     val url = POSTER_BASE_URL +W500+myMovie.backdrop_path
     val url2 = POSTER_BASE_URL +W185+myMovie.poster_path
+    val coroutineScope = rememberCoroutineScope()
 
     Surface(color = MaterialTheme.colorScheme.background) {
         Column(
@@ -155,6 +162,7 @@ fun DetailContent(movieDetailInfo: MovieDetailInfo?) {
                     RatingBar(modifier = Modifier.height(20.dp), stars = 10, rating = myMovie.vote_average, starsColor = Color.Red)
                     Text("${myMovie.vote_count}/10")
                 }
+
                 Box(
                     modifier = Modifier
                         .clip(CircleShape)
@@ -167,6 +175,12 @@ fun DetailContent(movieDetailInfo: MovieDetailInfo?) {
                             ),
                         ) {
                             favBtnClicked = !favBtnClicked
+                            coroutineScope.launch {
+                                viewModelInstance.UpdateFavMovie(
+                                    FavoritesItem(myMovie.id, myMovie.poster_path),
+                                    favBtnClicked
+                                )
+                            }
                         },
                     contentAlignment = Alignment.Center,
                 ) {
@@ -315,6 +329,7 @@ fun DetailContent(movieDetailInfo: MovieDetailInfo?) {
 @Composable
 fun DefaultPreviewDetail() {
     MyComposeM3PlayGroundTheme {
+        val viemodelInstance: MainViewModel= viewModel()
         DetailContent(
             MovieDetailInfo(
                 emptyList(),
@@ -334,8 +349,9 @@ fun DefaultPreviewDetail() {
                     false,
                     5.4,
                     12
-                )
-            )
+                ),
+            ),
+            viemodelInstance
         )
     }
 }

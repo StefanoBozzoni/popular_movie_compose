@@ -13,7 +13,7 @@ buildscript {
                     recyclerView       : "1.1.0",
                     viewPager          : "1.0.0",
                     legacy             : "1.0.0",
-                    room               : "2.2.5",
+                    room               : "2.5.2",
                     junit              : "4.12",
                     crashlytics        : "2.10.1",
                     firebaseCore       : "16.0.9",

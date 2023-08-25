@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id "org.jetbrains.kotlin.kapt"
 }
 
 android {
@@ -89,6 +90,7 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1' //necessary for viewmodelScope
     implementation "androidx.lifecycle:lifecycle-runtime-compose:2.6.1" //necessary for collectAsStateWithLifeCycle
     implementation 'androidx.compose.runtime:runtime-livedata'
+    //implementation 'androidx.compose.runtime:runtime-ktx:2.6.1'
     /*
     implementation 'androidx.compose.runtime:runtime-livedata'
      */
@@ -102,5 +104,12 @@ dependencies {
     api "com.squareup.retrofit2:converter-gson:${libVersions.retrofit}"
     api "com.squareup.okhttp3:okhttp:${libVersions.okHttp}"
     api "com.squareup.okhttp3:logging-interceptor:${libVersions.okHttp}"
+
+    implementation "androidx.room:room-runtime:${libVersions.room}"
+    annotationProcessor "androidx.room:room-compiler:${libVersions.room}"
+    implementation "androidx.room:room-ktx:${libVersions.room}"
+    // To use Kotlin annotation processing tool (kapt)
+    kapt "androidx.room:room-compiler:${libVersions.room}"
+
 
 }

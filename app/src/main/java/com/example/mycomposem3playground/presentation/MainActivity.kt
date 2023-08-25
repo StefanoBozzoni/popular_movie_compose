@@ -6,21 +6,39 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.FavoriteBorder
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
@@ -61,7 +79,7 @@ class MainActivity : ComponentActivity() {
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalAnimationApi::class)
 @Composable
-fun MyScaffoldWidget() {
+fun MyScaffoldWidget(viewModelInstance: MainViewModel = koinViewModel()) {
 
     val navController = rememberNavController()
     var showTopAppBar by rememberSaveable { mutableStateOf(true) }
@@ -84,13 +102,13 @@ fun MyScaffoldWidget() {
                     title = { Text("Movies catalog", color = MaterialTheme.colorScheme.onBackground) },
                     actions = {
                         Row(modifier = Modifier.padding(all = 0.dp)) {
-                            IconButton(onClick = { selection = 0 }) {
+                            IconButton(onClick = { selection = 0; viewModelInstance.getMovies(selection) }) {
                                 ActionIcon(vectorDrawable = ImageVector.vectorResource(id = R.drawable.ic_most_popular_svg), description = "popular", tint = getActionIconColor(selection == 0))
                             }
-                            IconButton(onClick = { selection = 1 }) {
+                            IconButton(onClick = { selection = 1; viewModelInstance.getMovies(selection) }) {
                                 ActionIcon(vectorDrawable = ImageVector.vectorResource(id = R.drawable.ic_top_rated_svg), description = "top", tint = getActionIconColor(selection == 1))
                             }
-                            IconButton(onClick = { selection = 2 }) {
+                            IconButton(onClick = { selection = 2; viewModelInstance.getMovies(selection) }) {
                                 ActionIcon(vectorDrawable = Icons.Outlined.FavoriteBorder, description = "fav", tint = getActionIconColor(selection == 2))
                             }
                         }
@@ -105,11 +123,11 @@ fun MyScaffoldWidget() {
                 startDestination = Routes.MainScreen.route,
             ) {
                 composable(route = Routes.MainScreen.route) {
-                    MainScreen(selection = selection, modifier = Modifier.padding(innerPadding)) { movieId ->
-                        navController.navigate(Routes.DetailsScreenArgsValues(movieId).route) /*{
+                    MainScreen(selection = selection, viewModelInstance = viewModelInstance, modifier = Modifier.padding(innerPadding)) { movieId ->
+                        navController.navigate(Routes.DetailsScreenArgsValues(movieId).route) {
                             navController.graph.findStartDestination().id
                         }
-                        */
+
                     }
                 }
                 composable(route = Routes.DetailScreenArgsName("id").route,
@@ -132,11 +150,9 @@ fun getActionIconColor(guard: Boolean): Color {
 }
 
 @Composable
-fun MainScreen(modifier: Modifier, selection: Int, viewModelInstance: MainViewModel = koinViewModel(), onMovieClicked: (Int) -> Unit) {
+fun MainScreen(modifier: Modifier, selection: Int, viewModelInstance: MainViewModel, onMovieClicked: (Int) -> Unit) {
+    //viewModelInstance.getMovies(selection)
 
-    viewModelInstance.getMovies(selection)
-
-    //val movies:List<Movie> by viewModelInstance.movies.collectAsState()
     val movies: LazyPagingItems<Movie> = when {
         selection == 0 -> {
             viewModelInstance.moviesList.collectAsLazyPagingItems()
@@ -175,7 +191,7 @@ fun MainScreen(modifier: Modifier, selection: Int, viewModelInstance: MainViewMo
                 }
             }
         }
-         */
+        */
     }
 }
 

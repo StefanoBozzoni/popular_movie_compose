@@ -5,17 +5,21 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
+import com.example.mycomposem3playground.data.local.model.FavoritesItem
 import com.example.mycomposem3playground.data.remote.dtos.Movie
-import com.example.mycomposem3playground.data.remote.dtos.MoviesCatalogDto
 import com.example.mycomposem3playground.domain.interactors.GetMoviesUC
 import com.example.mycomposem3playground.domain.interactors.GetSingleMovieUC
+import com.example.mycomposem3playground.domain.interactors.UpdateFavorites
 import com.example.mycomposem3playground.domain.model.MovieDetailInfo
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 class MainViewModel(
     val getMoviesUseCase: GetMoviesUC,
-    val getSingleMovieUseCase: GetSingleMovieUC
+    val getSingleMovieUseCase: GetSingleMovieUC,
+    val updateFavMovieUC: UpdateFavorites,
 
 ): ViewModel() {
 
@@ -26,21 +30,19 @@ class MainViewModel(
     val movie: StateFlow<MovieDetailInfo?> = _movie
 
 
-    /*
     init {
-        getMovies()
+        getMovies(0)
     }
-    */
 
     fun getMovies(selection: Int) {
         viewModelScope.launch {
-            getMoviesUseCase.execute(GetMoviesUC.Params(selection = selection)).cachedIn(this).collect {_moviesList.value = it }
+            getMoviesUseCase.execute(GetMoviesUC.Params(selection = selection)).cachedIn(this).collect { _moviesList.value = it }
         }
     }
 
     //anche questo funziona e non coinvolge l'uso di un altro MutableStateFlow
-    fun getMovies2(): Flow<PagingData<Movie>> {  //ritorna un flow
-        return getMoviesUseCase.execute(GetMoviesUC.Params(selection = 0)).cachedIn(viewModelScope)
+    fun getMovies2(selection: Int): Flow<PagingData<Movie>> {  //ritorna un flow
+        return getMoviesUseCase.execute(GetMoviesUC.Params(selection = selection)).cachedIn(viewModelScope)
     }
 
     fun getSingleMovie(id: Int) {
@@ -49,9 +51,14 @@ class MainViewModel(
         }
     }
 
-    suspend fun suspendGetSingleMovie(id: Int):MovieDetailInfo {
+    suspend fun suspendGetSingleMovie(id: Int): MovieDetailInfo {
         Log.d("XDEBUG", "Colling the service for to get the single movie by id")
        return getSingleMovieUseCase.execute(GetSingleMovieUC.Params(id))
     }
 
+    fun UpdateFavMovie(item: FavoritesItem, favChecked: Boolean) {
+        viewModelScope.launch {
+            updateFavMovieUC.execute(UpdateFavorites.Params(item, favChecked))
+        }
+    }
 }
