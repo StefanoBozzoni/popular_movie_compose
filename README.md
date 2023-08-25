@@ -8,8 +8,9 @@ It's made with kotlin and jetpack Compose for Android
 
 **Retrofit** (rest library)  
 **Jetpack Paging Library** (infinite scrolling grid)  
-**Koin** (dependency injection)  
-**Room** (for storage)  
+**Koin compose** (dependency injection)  
+**Room** (for storage)
+**Coil** (for displaying images)
 
 
 https://github.com/StefanoBozzoni/popolar_movie_flutter/assets/31867655/e452438d-05a2-4c93-9bef-710163b1136d
