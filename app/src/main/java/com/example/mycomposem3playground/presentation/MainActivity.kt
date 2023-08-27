@@ -102,10 +102,6 @@ fun getActionIconColor(guard: Boolean): Color {
     return (if (guard) Color.Black else Color.White)
 }
 
-fun updateMovies(selection: Int, viewModelInstance: MainViewModel) {
-    viewModelInstance.getMovies(selection)
-}
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen(viewModelInstance: MainViewModel = koinViewModel(), onMovieClicked: (Int) -> Unit) {
@@ -116,39 +112,36 @@ fun MainScreen(viewModelInstance: MainViewModel = koinViewModel(), onMovieClicke
     
     Scaffold(
         topBar = {
-            if (true) {
+            TopAppBar(
+                title = { Text("Movies catalog", color = MaterialTheme.colorScheme.onBackground) },
+                actions = {
+                    Row(modifier = Modifier.padding(all = 0.dp)) {
+                        IconButton(onClick = {
+                            selection = 0
+                            coroutineScope.launch {
+                                viewModelInstance.getMovies(selection)
+                                listState.scrollToItem(0)
+                            }
 
-                TopAppBar(
-                    title = { Text("Movies catalog", color = MaterialTheme.colorScheme.onBackground) },
-                    actions = {
-                        Row(modifier = Modifier.padding(all = 0.dp)) {
-                            IconButton(onClick = {
-                                selection = 0
-                                coroutineScope.launch {
-                                    viewModelInstance.getMovies(selection)
-                                    listState.scrollToItem(0)
-                                }
-
-                            }) {
-                                ActionIcon(vectorDrawable = ImageVector.vectorResource(id = R.drawable.ic_most_popular_svg), description = "popular", tint = getActionIconColor(selection == 0))
-                            }
-                            IconButton(onClick = {
-                                selection = 1
-                                coroutineScope.launch {
-                                    viewModelInstance.getMovies(selection)
-                                    listState.scrollToItem(0)
-                                }
-                            }) {
-                                ActionIcon(vectorDrawable = ImageVector.vectorResource(id = R.drawable.ic_top_rated_svg), description = "top", tint = getActionIconColor(selection == 1))
-                            }
-                            IconButton(onClick = { selection = 2; viewModelInstance.getMovies(selection) }) {
-                                ActionIcon(vectorDrawable = Icons.Outlined.FavoriteBorder, description = "fav", tint = getActionIconColor(selection == 2))
-                            }
+                        }) {
+                            ActionIcon(vectorDrawable = ImageVector.vectorResource(id = R.drawable.ic_most_popular_svg), description = "popular", tint = getActionIconColor(selection == 0))
                         }
-                    },
-                    colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.primaryContainer)
-                )
-            }
+                        IconButton(onClick = {
+                            selection = 1
+                            coroutineScope.launch {
+                                viewModelInstance.getMovies(selection)
+                                listState.scrollToItem(0)
+                            }
+                        }) {
+                            ActionIcon(vectorDrawable = ImageVector.vectorResource(id = R.drawable.ic_top_rated_svg), description = "top", tint = getActionIconColor(selection == 1))
+                        }
+                        IconButton(onClick = { selection = 2; viewModelInstance.getMovies(selection) }) {
+                            ActionIcon(vectorDrawable = Icons.Outlined.FavoriteBorder, description = "fav", tint = getActionIconColor(selection == 2))
+                        }
+                    }
+                },
+                colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.primaryContainer)
+            )
         },
         content = { innerPadding ->
             val movies: LazyPagingItems<Movie> = viewModelInstance.moviesList.collectAsLazyPagingItems()
