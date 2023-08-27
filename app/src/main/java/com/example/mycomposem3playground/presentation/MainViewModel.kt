@@ -1,6 +1,8 @@
 package com.example.mycomposem3playground.presentation
 
-import android.util.Log
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
@@ -14,6 +16,7 @@ import com.example.mycomposem3playground.domain.model.MovieDetailInfo
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.launch
 
 class MainViewModel(
@@ -22,6 +25,8 @@ class MainViewModel(
     val updateFavMovieUC: UpdateFavorites,
 
 ): ViewModel() {
+    var pageFlow by mutableStateOf<Flow<PagingData<Movie>>>(flowOf())
+        private set
 
     private val _moviesList = MutableStateFlow(PagingData.empty<Movie>())
     val moviesList: StateFlow<PagingData<Movie>> = _moviesList
@@ -29,14 +34,23 @@ class MainViewModel(
     private val _movie = MutableStateFlow<MovieDetailInfo?>(null)
     val movie: StateFlow<MovieDetailInfo?> = _movie
 
+    var selection: Int = 0
+        private set
 
     init {
-        getMovies(0)
+        getMovies(selection)
     }
 
     fun getMovies(selection: Int) {
         viewModelScope.launch {
-            getMoviesUseCase.execute(GetMoviesUC.Params(selection = selection)).cachedIn(this).collect { _moviesList.value = it }
+            pageFlow = getMoviesUseCase.execute(GetMoviesUC.Params(selection = selection)).cachedIn(this)
+            pageFlow.collect { _moviesList.value = it }
+        }
+    }
+
+    fun resetMovieList() {
+        viewModelScope.launch {
+            MutableStateFlow<PagingData<Movie>>(value = PagingData.empty()).collect { _moviesList.value = it }
         }
     }
 
@@ -45,14 +59,16 @@ class MainViewModel(
         return getMoviesUseCase.execute(GetMoviesUC.Params(selection = selection)).cachedIn(viewModelScope)
     }
 
+    /*
     fun getSingleMovie(id: Int) {
         viewModelScope.launch {
             _movie.value = getSingleMovieUseCase.execute(GetSingleMovieUC.Params(id))
         }
     }
 
+     */
+
     suspend fun suspendGetSingleMovie(id: Int): MovieDetailInfo {
-        Log.d("XDEBUG", "Colling the service for to get the single movie by id")
        return getSingleMovieUseCase.execute(GetSingleMovieUC.Params(id))
     }
 

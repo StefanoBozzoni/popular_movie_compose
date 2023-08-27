@@ -1,10 +1,12 @@
 package com.example.mycomposem3playground.domain.interactors
 
+import androidx.compose.runtime.mutableStateOf
 import androidx.paging.PagingData
 import com.example.mycomposem3playground.data.remote.dtos.Movie
 import com.example.mycomposem3playground.data.remote.dtos.MoviesCatalogDto
 import com.example.mycomposem3playground.domain.repository.IRepository
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
 
 class GetMoviesUC(private val remoteRepository: IRepository) {
     fun execute(params: Params): Flow<PagingData<Movie>> {
