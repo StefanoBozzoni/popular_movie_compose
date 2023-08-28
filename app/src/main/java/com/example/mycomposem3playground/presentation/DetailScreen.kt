@@ -2,12 +2,16 @@ package com.example.mycomposem3playground.presentation
 
 import android.content.Intent
 import android.net.Uri
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
@@ -19,16 +23,24 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.ripple.rememberRipple
+import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.Divider
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MaterialTheme.colorScheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.produceState
@@ -42,6 +54,7 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -53,12 +66,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
 import androidx.core.content.ContextCompat.startActivity
-import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import coil.size.Size
 import com.example.mycomposem3playground.POSTER_BASE_URL
 import com.example.mycomposem3playground.R
+import com.example.mycomposem3playground.Routes
 import com.example.mycomposem3playground.W185
 import com.example.mycomposem3playground.W500
 import com.example.mycomposem3playground.YOUTUBE_TN_URL
@@ -66,14 +79,15 @@ import com.example.mycomposem3playground.YOUTUBE_TRAILERS_URL
 import com.example.mycomposem3playground.data.local.model.FavoritesItem
 import com.example.mycomposem3playground.data.remote.dtos.Movie
 import com.example.mycomposem3playground.domain.model.MovieDetailInfo
-import com.example.mycomposem3playground.presentation.ui.theme.MyComposeM3PlayGroundTheme
+import com.example.mycomposem3playground.presentation.ui.theme.PopularMovieComposeTheme
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 import java.text.SimpleDateFormat
 import java.util.Locale
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DetailScreen(viewModelInstance: MainViewModel = koinViewModel(), movieId: Int) {
+fun DetailScreen(viewModelInstance: MainViewModel = koinViewModel(), movieId: Int, onNavBack: () -> Unit) {
 
     /*
     per chiamare un servizio:, primo metodo:
@@ -85,19 +99,38 @@ fun DetailScreen(viewModelInstance: MainViewModel = koinViewModel(), movieId: In
     */
 
     //per chiamare un servizio, secondo metodo, usando produceState per chiamare una funzione sospesa:
-    val result by produceState<MovieDetailInfo?>(initialValue = null) {
+    val movieDetailInfo by produceState<MovieDetailInfo?>(initialValue = null) {
         value = viewModelInstance.suspendGetSingleMovie(movieId)
     }
-    DetailContent(result, viewModelInstance)
+    Scaffold(
+        topBar = {
+            TopAppBar(
+               title = {Text("Anteprima")},
+               navigationIcon= {
+                   IconButton(
+                       onClick = {
+                            onNavBack()
+                   }) {
+                       Icon(Icons.Filled.ArrowBack, "backIcon")
+                   }
+               },
+               colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.primaryContainer)
+            )
+        },
+        content = { paddingValues->
+            DetailContent(movieDetailInfo, paddingValues, viewModelInstance)
+        },
+    )
+
 }
 
 
 @Composable
-fun DetailContent(movieDetailInfo: MovieDetailInfo?, viewModelInstance: MainViewModel) {
+fun DetailContent(movieDetailInfo: MovieDetailInfo?, paddingValues: PaddingValues, viewModelInstance: MainViewModel?) {
     if (movieDetailInfo == null) return
 
     var favBtnClicked by rememberSaveable{
-        mutableStateOf(false)
+        mutableStateOf(movieDetailInfo.favorite)
     }
 
     val myMovie = movieDetailInfo.movie
@@ -105,7 +138,7 @@ fun DetailContent(movieDetailInfo: MovieDetailInfo?, viewModelInstance: MainView
     val url2 = POSTER_BASE_URL +W185+myMovie.poster_path
     val coroutineScope = rememberCoroutineScope()
 
-    Surface(color = MaterialTheme.colorScheme.background) {
+    Surface(color = MaterialTheme.colorScheme.background, modifier = Modifier.padding(paddingValues)) {
         Column(
             modifier= Modifier.verticalScroll(state = rememberScrollState(), enabled = true)
         ) {
@@ -176,7 +209,7 @@ fun DetailContent(movieDetailInfo: MovieDetailInfo?, viewModelInstance: MainView
                         ) {
                             favBtnClicked = !favBtnClicked
                             coroutineScope.launch {
-                                viewModelInstance.UpdateFavMovie(
+                                viewModelInstance?.UpdateFavMovie(
                                     FavoritesItem(myMovie.id, myMovie.poster_path),
                                     favBtnClicked
                                 )
@@ -215,12 +248,13 @@ fun DetailContent(movieDetailInfo: MovieDetailInfo?, viewModelInstance: MainView
             if (movieDetailInfo.videos.size>0) {
                 Text(
                     "Trailers",
-                    fontSize = 20.sp,
+                    fontSize = 16.sp,
                     fontWeight = FontWeight.Bold,
                     textAlign = TextAlign.Center,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(top = 16.dp, bottom = 8.dp)
+                        .padding(top = 8.dp, bottom = 4.dp, start = 8.dp, end = 8.dp)
+                        .background(colorScheme.tertiaryContainer, shape = CircleShape)
                 )
             } else {
                 Text(
@@ -231,14 +265,16 @@ fun DetailContent(movieDetailInfo: MovieDetailInfo?, viewModelInstance: MainView
                     color = Color.Gray,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(top = 16.dp, bottom = 8.dp)
+                        .padding(top = 4.dp, bottom = 4.dp)
+                        .background(colorScheme.tertiaryContainer, shape = CircleShape)
+                        .padding(top = 8.dp, bottom = 8.dp)
                 )
             }
             val context = LocalContext.current
             LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(bottom = 16.dp, start = 8.dp, end = 8.dp)
+                    .padding(bottom = 12.dp, start = 8.dp, end = 8.dp)
             ) {
                 items(movieDetailInfo.videos) {
                     val urlthumbnail = YOUTUBE_TN_URL + it.key + "/hqdefault.jpg"
@@ -280,12 +316,14 @@ fun DetailContent(movieDetailInfo: MovieDetailInfo?, viewModelInstance: MainView
             if (movieDetailInfo.review.size>=1) {
                 Text(
                     "Reviews",
-                    fontSize = 20.sp,
+                    fontSize = 16.sp,
                     fontWeight = FontWeight.Bold,
                     textAlign = TextAlign.Center,
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(bottom = 4.dp, start = 8.dp, end = 8.dp)
+                        .background(colorScheme.tertiaryContainer, shape = CircleShape)
+
                 )
             }
 
@@ -293,6 +331,7 @@ fun DetailContent(movieDetailInfo: MovieDetailInfo?, viewModelInstance: MainView
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(bottom = 16.dp, start = 8.dp, end = 8.dp)
+                    .background(colorScheme.tertiaryContainer, shape = RoundedCornerShape(8.dp))
             ) {
                 for (i in (0..movieDetailInfo.review.size-1)) {
                     Text(
@@ -300,12 +339,14 @@ fun DetailContent(movieDetailInfo: MovieDetailInfo?, viewModelInstance: MainView
                         fontSize = 12.sp,
                         maxLines = 2,
                         overflow = TextOverflow.Ellipsis,
-                        color = Color.Gray,
-                        modifier = Modifier.clickable {
-                            val reviewsUrl = movieDetailInfo.review[i].url;
-                            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(reviewsUrl))
-                            startActivity(context, intent, null)
-                        }
+                        color = colorScheme.onTertiaryContainer,
+                        modifier = Modifier
+                            .padding(horizontal = 8.dp)
+                            .clickable {
+                                val reviewsUrl = movieDetailInfo.review[i].url;
+                                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(reviewsUrl))
+                                startActivity(context, intent, null)
+                            }
                     )
                     Divider()
                 }
@@ -313,23 +354,12 @@ fun DetailContent(movieDetailInfo: MovieDetailInfo?, viewModelInstance: MainView
 
         }
     }
-
-    /*
-    Box(
-        contentAlignment = Alignment.Center,
-        modifier = Modifier.fillMaxSize()
-    ) {
-        Text("Hello world: ${movieDetailInfo.movie.title}")
-
-    }
-    */
 }
 
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreviewDetail() {
-    MyComposeM3PlayGroundTheme {
-        val viemodelInstance: MainViewModel= viewModel()
+    PopularMovieComposeTheme {
         DetailContent(
             MovieDetailInfo(
                 emptyList(),
@@ -348,10 +378,12 @@ fun DefaultPreviewDetail() {
                     "hello",
                     false,
                     5.4,
-                    12
+                    12,
                 ),
+                true
             ),
-            viemodelInstance
+            PaddingValues(all = 0.dp),
+            null
         )
     }
 }

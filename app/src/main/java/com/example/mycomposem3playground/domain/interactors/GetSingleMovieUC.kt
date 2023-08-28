@@ -11,10 +11,12 @@ class GetSingleMovieUC(private val remoteRepository: IRepository) {
         val movie   = remoteRepository.getSingleMovie(params.id)
         val videos  = remoteRepository.getMovieVideos(params.id)
         val reviews = remoteRepository.getMovieReviews(params.id)
+        val favorite = remoteRepository.getFavoriteStatus(params.id)
         return MovieDetailInfo(
             reviews.results,
             videos.results,
-            movie
+            movie,
+            favorite
         )
     }
 

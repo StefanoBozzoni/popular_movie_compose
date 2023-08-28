@@ -1,7 +1,6 @@
 package com.example.mycomposem3playground.presentation
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.clickable
@@ -61,7 +60,7 @@ import com.example.mycomposem3playground.R
 import com.example.mycomposem3playground.Routes
 import com.example.mycomposem3playground.W185
 import com.example.mycomposem3playground.data.remote.dtos.Movie
-import com.example.mycomposem3playground.presentation.ui.theme.MyComposeM3PlayGroundTheme
+import com.example.mycomposem3playground.presentation.ui.theme.PopularMovieComposeTheme
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 
@@ -69,7 +68,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            MyComposeM3PlayGroundTheme {
+            PopularMovieComposeTheme {
                 NavigationView()
             }
         }
@@ -81,7 +80,7 @@ fun NavigationView() {
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = Routes.MainScreen.route) {
         composable(route = Routes.MainScreen.route) {
-            MainScreen() { movieId ->
+            MainScreen { movieId ->
                 navController.navigate(Routes.DetailsScreenArgsValues(movieId).route)
             }
         }
@@ -93,7 +92,9 @@ fun NavigationView() {
                 },
             )
         ) {
-            DetailScreen(movieId = it.arguments!!.getInt("id"))
+            DetailScreen(movieId = it.arguments!!.getInt("id"), onNavBack = {
+                navController.popBackStack()
+            })
         }
     }
 }
@@ -314,7 +315,7 @@ fun MovieItem(item: Movie) {
 @Preview(showBackground = true)
 @Composable
 fun MovieItemPreview() {
-    MyComposeM3PlayGroundTheme {
+    PopularMovieComposeTheme {
         //MovieItem()
     }
 }
@@ -322,7 +323,7 @@ fun MovieItemPreview() {
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
-    MyComposeM3PlayGroundTheme {
+    PopularMovieComposeTheme {
         //MyScaffoldWidget()
     }
 }

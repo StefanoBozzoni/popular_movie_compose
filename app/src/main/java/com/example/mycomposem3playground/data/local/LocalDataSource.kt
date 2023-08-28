@@ -19,4 +19,8 @@ class LocalDataSource(private val database: AppDatabase) {
         return database.favoritesDao().getFavoriteMovieList()
     }
 
+    suspend fun getFavoriteMovie(id: Int): Boolean {
+        return (database.favoritesDao().getFavoriteMovie(id) != null)
+    }
+
 }

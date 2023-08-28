@@ -5,5 +5,6 @@ import com.example.mycomposem3playground.data.remote.dtos.*
 class MovieDetailInfo(
     val review: List<Review>,
     val videos: List<Video>,
-    val movie: Movie
+    val movie: Movie,
+    var favorite: Boolean
 )

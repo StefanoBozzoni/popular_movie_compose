@@ -46,5 +46,7 @@ internal class Repository(private val appService: AppService, private val localD
             localDataSource.deleteFavoriteItem(item)
         }
     }
-
+    override suspend fun getFavoriteStatus(movieId: Int): Boolean {
+        return localDataSource.getFavoriteMovie(movieId)
+    }
 }

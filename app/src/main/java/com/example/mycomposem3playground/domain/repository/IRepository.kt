@@ -15,4 +15,5 @@ interface IRepository {
     suspend fun getMovieVideos(id: Int): VideoCatalog
     suspend fun getMovieReviews(id: Int): ReviewsCatalog
     suspend fun updateFavorite(item: FavoritesItem, checkFav: Boolean)
+    suspend fun getFavoriteStatus(movieId: Int): Boolean
 }
