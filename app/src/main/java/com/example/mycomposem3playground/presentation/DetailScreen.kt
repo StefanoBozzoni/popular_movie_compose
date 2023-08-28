@@ -105,7 +105,7 @@ fun DetailScreen(viewModelInstance: MainViewModel = koinViewModel(), movieId: In
     Scaffold(
         topBar = {
             TopAppBar(
-               title = {Text("Anteprima")},
+               title = {Text("Preview")},
                navigationIcon= {
                    IconButton(
                        onClick = {
