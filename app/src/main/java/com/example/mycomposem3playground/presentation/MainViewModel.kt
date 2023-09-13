@@ -1,5 +1,6 @@
 package com.example.mycomposem3playground.presentation
 
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -28,8 +29,8 @@ class MainViewModel(
     var pageFlow by mutableStateOf<Flow<PagingData<Movie>>>(flowOf())
         private set
 
-    private val _moviesList = MutableStateFlow(PagingData.empty<Movie>())
-    val moviesList: StateFlow<PagingData<Movie>> = _moviesList
+    private var _moviesList = MutableStateFlow(PagingData.empty<Movie>())
+    val moviesList: StateFlow<PagingData<Movie>> get() = _moviesList
 
     private val _movie = MutableStateFlow<MovieDetailInfo?>(null)
     val movie: StateFlow<MovieDetailInfo?> = _movie
@@ -41,6 +42,11 @@ class MainViewModel(
         getMovies(selection)
     }
 
+    fun resetFlow() {
+        _moviesList =  MutableStateFlow(PagingData.empty<Movie>())
+        Log.d("XDEBUG", _moviesList.toString())
+    }
+
     fun getMovies(selection: Int) {
         viewModelScope.launch {
             pageFlow = getMoviesUseCase.execute(GetMoviesUC.Params(selection = selection)).cachedIn(this)
@@ -48,25 +54,10 @@ class MainViewModel(
         }
     }
 
-    fun resetMovieList() {
-        viewModelScope.launch {
-            MutableStateFlow<PagingData<Movie>>(value = PagingData.empty()).collect { _moviesList.value = it }
-        }
-    }
-
     //anche questo funziona e non coinvolge l'uso di un altro MutableStateFlow
     fun getMovies2(selection: Int): Flow<PagingData<Movie>> {  //ritorna un flow
         return getMoviesUseCase.execute(GetMoviesUC.Params(selection = selection)).cachedIn(viewModelScope)
     }
-
-    /*
-    fun getSingleMovie(id: Int) {
-        viewModelScope.launch {
-            _movie.value = getSingleMovieUseCase.execute(GetSingleMovieUC.Params(id))
-        }
-    }
-
-     */
 
     suspend fun suspendGetSingleMovie(id: Int): MovieDetailInfo {
        return getSingleMovieUseCase.execute(GetSingleMovieUC.Params(id))

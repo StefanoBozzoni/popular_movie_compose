@@ -84,7 +84,8 @@ fun NavigationView() {
                 navController.navigate(Routes.DetailsScreenArgsValues(movieId).route)
             }
         }
-        composable(route = Routes.DetailScreenArgsName("id").route,
+        composable(
+            route = Routes.DetailScreenArgsName("id").route,
             arguments = listOf(
                 navArgument("id") {
                     type = NavType.IntType
@@ -120,23 +121,31 @@ fun MainScreen(viewModelInstance: MainViewModel = koinViewModel(), onMovieClicke
                         IconButton(onClick = {
                             selection = 0
                             coroutineScope.launch {
-                                viewModelInstance.getMovies(selection)
                                 listState.scrollToItem(0)
+                                viewModelInstance.resetFlow()
+                                viewModelInstance.getMovies(selection)
                             }
-
                         }) {
                             ActionIcon(vectorDrawable = ImageVector.vectorResource(id = R.drawable.ic_most_popular_svg), description = "popular", tint = getActionIconColor(selection == 0))
                         }
                         IconButton(onClick = {
                             selection = 1
                             coroutineScope.launch {
-                                viewModelInstance.getMovies(selection)
                                 listState.scrollToItem(0)
+                                viewModelInstance.resetFlow()
+                                viewModelInstance.getMovies(selection)
                             }
                         }) {
                             ActionIcon(vectorDrawable = ImageVector.vectorResource(id = R.drawable.ic_top_rated_svg), description = "top", tint = getActionIconColor(selection == 1))
                         }
-                        IconButton(onClick = { selection = 2; viewModelInstance.getMovies(selection) }) {
+                        IconButton(onClick = {
+                            selection = 2
+                            coroutineScope.launch {
+                                listState.scrollToItem(0)
+                                viewModelInstance.resetFlow()
+                                viewModelInstance.getMovies(selection)
+                            }
+                        }) {
                             ActionIcon(vectorDrawable = Icons.Outlined.FavoriteBorder, description = "fav", tint = getActionIconColor(selection == 2))
                         }
                     }
@@ -145,26 +154,13 @@ fun MainScreen(viewModelInstance: MainViewModel = koinViewModel(), onMovieClicke
             )
         },
         content = { innerPadding ->
+
+            selection *= 1  //force the recomposition of this widget when selection changes
             val movies: LazyPagingItems<Movie> = viewModelInstance.moviesList.collectAsLazyPagingItems()
 
-
-            /*
-            val movies: LazyPagingItems<Movie> = when(selection) {
-                1 -> {
-                    viewModelInstance.moviesList.collectAsLazyPagingItems()
-                }
-                2 -> {
-                    viewModelInstance.moviesList.collectAsLazyPagingItems()
-                }
-                else -> {
-                    viewModelInstance.moviesList.collectAsLazyPagingItems()
-                }
-            }
-
-             */
-
-            //val movies: LazyPagingItems<Movie> = viewModelInstance.moviesList.collectAsLazyPagingItems()
-            // alternativamente : val movies: LazyPagingItems<Movie> = viewModelInstance.getMovies2().collectAsLazyPagingItems()
+            //alternativamente :
+            //val movies: LazyPagingItems<Movie> = viewModelInstance.getMovies2(selection).collectAsLazyPagingItems()
+            //però questa istruzione quando si ruota lo schermo viene rieseguita ogni volta
 
             // se non dovessi estrarre dati paginati farei:
             // val movies: LazyPagingItems<Movie> = viewModelInstance.movies.collectAsState()
@@ -174,7 +170,8 @@ fun MainScreen(viewModelInstance: MainViewModel = koinViewModel(), onMovieClicke
                     columns = GridCells.Adaptive(130.dp),
                     state = listState
                 ) {
-                    items(count = movies.itemCount, key = { (movies[it]?.id?:0)+it }) { index ->
+                    items(count = movies.itemCount)
+                    { index ->
                         movies[index]?.let {
                             MovieItemGrid(it, onMovieClicked)
                         }
@@ -217,7 +214,7 @@ fun ActionIcon(vectorDrawable: ImageVector, description: String, tint: Color) =
                 .offset(y = (-5).dp),
             color = tint,
             fontWeight = FontWeight.Bold
-            )
+        )
     }
 
 @Composable
@@ -250,7 +247,7 @@ fun MovieItemGrid(item: Movie, onMovieClicked: (Int) -> Unit) {
     }
 }
 
-/* suing painter class
+/* using painter class
 @Composable
 fun MovieItemGrid2(item: Movie, onMovieClicked: (Int) -> Unit) {
     //example uri : http://image.tmdb.org/t/p/w185//nBNZadXqJSdt05SHLqgT0HuC5Gm.jpg
