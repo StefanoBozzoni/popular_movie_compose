@@ -120,18 +120,15 @@ fun MainScreen(viewModelInstance: MainViewModel = koinViewModel(), onMovieClicke
                     Row(modifier = Modifier.padding(all = 0.dp)) {
                         IconButton(onClick = {
                             selection = 0
-                            coroutineScope.launch {
-                                listState.scrollToItem(0)
-                                viewModelInstance.resetFlow()
-                                viewModelInstance.getMovies(selection)
-                            }
+                            viewModelInstance.resetFlow()
+                            viewModelInstance.getMovies(selection)
                         }) {
                             ActionIcon(vectorDrawable = ImageVector.vectorResource(id = R.drawable.ic_most_popular_svg), description = "popular", tint = getActionIconColor(selection == 0))
                         }
                         IconButton(onClick = {
                             selection = 1
                             coroutineScope.launch {
-                                listState.scrollToItem(0)
+                                //listState.scrollToItem(0)
                                 viewModelInstance.resetFlow()
                                 viewModelInstance.getMovies(selection)
                             }
@@ -140,11 +137,8 @@ fun MainScreen(viewModelInstance: MainViewModel = koinViewModel(), onMovieClicke
                         }
                         IconButton(onClick = {
                             selection = 2
-                            coroutineScope.launch {
-                                listState.scrollToItem(0)
-                                viewModelInstance.resetFlow()
-                                viewModelInstance.getMovies(selection)
-                            }
+                            viewModelInstance.resetFlow()
+                            viewModelInstance.getMovies(selection)
                         }) {
                             ActionIcon(vectorDrawable = Icons.Outlined.FavoriteBorder, description = "fav", tint = getActionIconColor(selection == 2))
                         }
