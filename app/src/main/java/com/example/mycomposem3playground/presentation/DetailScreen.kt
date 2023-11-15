@@ -66,6 +66,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
 import androidx.core.content.ContextCompat.startActivity
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import coil.size.Size
@@ -91,11 +92,14 @@ fun DetailScreen(viewModelInstance: MainViewModel = koinViewModel(), movieId: In
 
     /*
     per chiamare un servizio:, primo metodo:
-    LaunchedEffect(key1 = Unit) {
-        viewModelInstance.getSingleMovie(movieId)
-    }
+    viewModelInstance.getSingleMovie(movieId)  //non è necessario lanciarla da dentro LaunchedEffect
     val result by viewModelInstance.movie.collectAsStateWithLifecycle()
     DetailContent(result)
+
+    //alternativamente , equivalentemente (che viene però modificata solo quando il value cambia)
+    val movie by derivedStateOf {
+        viewModelInstance.movie.collectAsStateWithLifecycle().value
+    }
     */
 
     //per chiamare un servizio, secondo metodo, usando produceState per chiamare una funzione sospesa:
@@ -114,7 +118,7 @@ fun DetailScreen(viewModelInstance: MainViewModel = koinViewModel(), movieId: In
                        Icon(Icons.Filled.ArrowBack, "backIcon")
                    }
                },
-               colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.primaryContainer)
+               colors = TopAppBarDefaults.topAppBarColors(containerColor = colorScheme.primaryContainer)
             )
         },
         content = { paddingValues->
@@ -208,12 +212,10 @@ fun DetailContent(movieDetailInfo: MovieDetailInfo?, paddingValues: PaddingValue
                             ),
                         ) {
                             favBtnClicked = !favBtnClicked
-                            coroutineScope.launch {
-                                viewModelInstance?.UpdateFavMovie(
-                                    FavoritesItem(myMovie.id, myMovie.poster_path),
-                                    favBtnClicked
-                                )
-                            }
+                            viewModelInstance?.UpdateFavMovie(
+                                FavoritesItem(myMovie.id, myMovie.poster_path),
+                                favBtnClicked
+                            )
                         },
                     contentAlignment = Alignment.Center,
                 ) {
