@@ -1,6 +1,6 @@
 # Popular Movies Kotlin + Jepack compose
-IMDB movies browser written in kotlin + jepack compose
-new: now it also supports hilt
+IMDB movies browser written in kotlin + jepack compose  
+new: now it also supports hilt  
 
 This is the famous "popular movie" app useful to browse IMDB movies.
 It's made with kotlin and jetpack Compose for Android
