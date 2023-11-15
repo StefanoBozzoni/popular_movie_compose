@@ -5,8 +5,9 @@ import com.example.mycomposem3playground.data.remote.dtos.Movie
 import com.example.mycomposem3playground.domain.model.MovieDetailInfo
 import com.example.mycomposem3playground.domain.repository.IRepository
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-class GetSingleMovieUC(private val remoteRepository: IRepository) {
+class GetSingleMovieUC @Inject constructor(private val remoteRepository: IRepository) {
     suspend fun execute(params: Params): MovieDetailInfo {
         val movie   = remoteRepository.getSingleMovie(params.id)
         val videos  = remoteRepository.getMovieVideos(params.id)

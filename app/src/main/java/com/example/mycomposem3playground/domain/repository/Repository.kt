@@ -11,8 +11,11 @@ import com.example.mycomposem3playground.data.remote.dtos.ReviewsCatalog
 import com.example.mycomposem3playground.data.remote.dtos.VideoCatalog
 import com.example.mycomposem3playground.domain.pagination.MoviesPagingSource
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
+import javax.inject.Singleton
 
-internal class Repository(private val appService: AppService, private val localDataSource: LocalDataSource): IRepository {
+@Singleton
+internal class Repository @Inject constructor(private val appService: AppService, private val localDataSource: LocalDataSource): IRepository {
 
     override suspend fun getMoviesCatalog(numPage: Int?): List<Movie> {
         return appService.getMovies(numPage).body()?.results ?: emptyList()

@@ -1,4 +1,4 @@
-package com.example.mycomposem3playground.cdi
+package com.example.mycomposem3playground.cdiHilt
 
 object EnvironmentConfig {
     const val BASE_DOMAIN = "api.themoviedb.org/3/movie"

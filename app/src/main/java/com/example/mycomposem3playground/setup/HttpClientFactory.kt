@@ -4,8 +4,11 @@ import com.example.mycomposem3playground.BuildConfig
 import okhttp3.CertificatePinner
 import okhttp3.OkHttpClient
 import java.util.concurrent.TimeUnit
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class HttpClientFactory(private val baseDomain: String, private val certificatesPins: List<String>) {
+@Singleton
+class HttpClientFactory @Inject constructor(private val baseDomain: String, private val certificatesPins: List<String>) {
     val abstractClient: OkHttpClient by lazy {
         val builder = OkHttpClient.Builder()
             .writeTimeout(10, TimeUnit.SECONDS)

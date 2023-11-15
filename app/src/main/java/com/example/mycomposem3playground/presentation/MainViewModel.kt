@@ -14,17 +14,19 @@ import com.example.mycomposem3playground.domain.interactors.GetMoviesUC
 import com.example.mycomposem3playground.domain.interactors.GetSingleMovieUC
 import com.example.mycomposem3playground.domain.interactors.UpdateFavorites
 import com.example.mycomposem3playground.domain.model.MovieDetailInfo
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class MainViewModel(
+@HiltViewModel
+class MainViewModel @Inject constructor(
     val getMoviesUseCase: GetMoviesUC,
     val getSingleMovieUseCase: GetSingleMovieUC,
     val updateFavMovieUC: UpdateFavorites,
-
 ): ViewModel() {
     var pageFlow by mutableStateOf<Flow<PagingData<Movie>>>(flowOf())
         private set

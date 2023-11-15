@@ -1,11 +1,13 @@
 package com.example.mycomposem3playground.data.local
 
+import com.example.mycomposem3playground.cdiHilt.AppMainDB
 import com.example.mycomposem3playground.data.local.database.AppDatabase
 import com.example.mycomposem3playground.data.local.model.FavoritesItem
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class LocalDataSource(private val database: AppDatabase) {
+@Singleton
+class LocalDataSource @Inject constructor(@AppMainDB private val database: AppDatabase) {
 
     suspend fun storeFavoriteItem(favoritesItem: FavoritesItem) {
         database.favoritesDao().insertFavorite(favoritesItem)

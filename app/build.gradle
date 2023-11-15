@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id "org.jetbrains.kotlin.kapt"
+    id 'com.google.dagger.hilt.android'
 }
 
 android {
@@ -51,6 +52,10 @@ android {
     }
 }
 
+kapt {
+    correctErrorTypes true
+}
+
 dependencies {
 
     implementation 'androidx.core:core-ktx:1.8.21'
@@ -90,26 +95,28 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1' //necessary for viewmodelScope
     implementation "androidx.lifecycle:lifecycle-runtime-compose:2.6.1" //necessary for collectAsStateWithLifeCycle
     implementation 'androidx.compose.runtime:runtime-livedata'
-    //implementation 'androidx.compose.runtime:runtime-ktx:2.6.1'
     /*
-    implementation 'androidx.compose.runtime:runtime-livedata'
+      implementation 'androidx.compose.runtime:runtime-ktx:2.6.1'
+      implementation 'androidx.compose.runtime:runtime-livedata'
      */
 
     implementation 'io.coil-kt:coil-compose:2.4.0'
 
-    //implementation 'org.koin:koin-core:1.0.2'  //3.4.0
-    //implementation 'org.koin:koin-android-viewmodel:1.0.2'
-    implementation 'io.insert-koin:koin-androidx-compose:3.4.3'
-    api "com.squareup.retrofit2:retrofit:${libVersions.retrofit}"
-    api "com.squareup.retrofit2:converter-gson:${libVersions.retrofit}"
-    api "com.squareup.okhttp3:okhttp:${libVersions.okHttp}"
-    api "com.squareup.okhttp3:logging-interceptor:${libVersions.okHttp}"
+    //retrofit
+    api "com.squareup.retrofit2:retrofit:${libVersions.retrofitVersion}"
+    api "com.squareup.retrofit2:converter-gson:${libVersions.retrofitVersion}"
+    api "com.squareup.okhttp3:okhttp:${libVersions.okHttpVersion}"
+    api "com.squareup.okhttp3:logging-interceptor:4.12.0"
 
+    //room
     implementation "androidx.room:room-runtime:${libVersions.room}"
     annotationProcessor "androidx.room:room-compiler:${libVersions.room}"
     implementation "androidx.room:room-ktx:${libVersions.room}"
-    // To use Kotlin annotation processing tool (kapt)
-    kapt "androidx.room:room-compiler:${libVersions.room}"
+    kapt "androidx.room:room-compiler:${libVersions.room}" // To use Kotlin annotation processing tool (kapt) for room
 
+    //hilt
+    implementation "com.google.dagger:hilt-android:${libVersions.hiltVersion}"
+    implementation "androidx.hilt:hilt-navigation-compose:1.0.0"
+    kapt "com.google.dagger:hilt-compiler:${libVersions.hiltVersion}" // To use Kotlin annotation processing tool (kapt) for hilt
 
 }

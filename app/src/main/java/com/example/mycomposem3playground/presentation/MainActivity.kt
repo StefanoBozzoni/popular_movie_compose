@@ -45,6 +45,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -61,9 +62,10 @@ import com.example.mycomposem3playground.Routes
 import com.example.mycomposem3playground.W185
 import com.example.mycomposem3playground.data.remote.dtos.Movie
 import com.example.mycomposem3playground.presentation.ui.theme.PopularMovieComposeTheme
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import org.koin.androidx.compose.koinViewModel
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -106,7 +108,7 @@ fun getActionIconColor(guard: Boolean): Color {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainScreen(viewModelInstance: MainViewModel = koinViewModel(), onMovieClicked: (Int) -> Unit) {
+fun MainScreen(viewModelInstance: MainViewModel = hiltViewModel<MainViewModel>(), onMovieClicked: (Int) -> Unit) {
 
     var selection: Int by rememberSaveable { mutableStateOf(0) }
     val coroutineScope = rememberCoroutineScope()

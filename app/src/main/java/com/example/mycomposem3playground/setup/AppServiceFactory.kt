@@ -1,8 +1,11 @@
 package com.example.mycomposem3playground.setup
 
 import com.example.mycomposem3playground.data.remote.AppService
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class AppServiceFactory(private val httpClientFactory: HttpClientFactory) {
+@Singleton
+class AppServiceFactory @Inject constructor(private val httpClientFactory: HttpClientFactory) {
 
     fun getAppService(serviceFactory : ServiceFactory): AppService {
         val httpClient = httpClientFactory.abstractClient.newBuilder()

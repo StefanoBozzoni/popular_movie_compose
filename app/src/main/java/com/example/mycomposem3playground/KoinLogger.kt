@@ -1,5 +1,6 @@
 package com.example.mycomposem3playground
 
+/*
 import android.util.Log
 import org.koin.core.logger.Level
 import org.koin.core.logger.Logger
@@ -10,3 +11,5 @@ class KoinLogger : Logger() {
         Log.i("KOIN",msg)
     }
 }
+
+ */
