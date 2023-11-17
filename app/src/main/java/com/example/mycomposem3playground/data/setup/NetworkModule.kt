@@ -20,5 +20,5 @@ object NetworkModule {
             .build()
         it.proceed(request)
     }
-    
+
 }
