@@ -1,4 +1,4 @@
-package com.example.mycomposem3playground.setup
+package com.example.mycomposem3playground.data.setup
 
 import com.example.mycomposem3playground.BuildConfig
 import okhttp3.Interceptor
@@ -20,11 +20,5 @@ object NetworkModule {
             .build()
         it.proceed(request)
     }
-
-    fun createHeadersAriaInterceptor() = Interceptor {
-        val request = it.request().newBuilder()
-            .addHeader("Content-Type", "application/x-www-form-urlencoded")
-            .build()
-        it.proceed(request)
-    }
+    
 }

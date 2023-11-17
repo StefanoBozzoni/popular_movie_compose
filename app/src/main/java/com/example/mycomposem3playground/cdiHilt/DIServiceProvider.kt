@@ -10,9 +10,9 @@ import com.example.mycomposem3playground.data.local.database.DatabaseConstants
 import com.example.mycomposem3playground.data.remote.AppService
 import com.example.mycomposem3playground.domain.repository.IRepository
 import com.example.mycomposem3playground.domain.repository.Repository
-import com.example.mycomposem3playground.setup.AppServiceFactory
-import com.example.mycomposem3playground.setup.HttpClientFactory
-import com.example.mycomposem3playground.setup.ServiceFactory
+import com.example.mycomposem3playground.data.setup.AppServiceFactory
+import com.example.mycomposem3playground.data.setup.HttpClientFactory
+import com.example.mycomposem3playground.data.setup.ServiceFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
