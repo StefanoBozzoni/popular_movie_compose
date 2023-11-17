@@ -27,6 +27,8 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.currentCompositionLocalContext
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -62,6 +64,7 @@ import com.example.mycomposem3playground.Routes
 import com.example.mycomposem3playground.W185
 import com.example.mycomposem3playground.data.remote.dtos.Movie
 import com.example.mycomposem3playground.presentation.ui.theme.PopularMovieComposeTheme
+import com.example.mymodule.MyModule
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -82,8 +85,11 @@ fun NavigationView() {
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = Routes.MainScreen.route) {
         composable(route = Routes.MainScreen.route) {
+            val context = LocalContext.current
             MainScreen { movieId ->
-                navController.navigate(Routes.DetailsScreenArgsValues(movieId).route)
+                //navController.navigate(Routes.DetailsScreenArgsValues(movieId).route)
+                MyModule.appContext = context
+                MyModule.startActivity()
             }
         }
         composable(

@@ -59,6 +59,7 @@ kapt {
 dependencies {
 
     implementation 'androidx.core:core-ktx:1.8.21'
+    implementation project(path: ':app:mymodule')
     def composeBom = platform('androidx.compose:compose-bom:2023.06.01')
     implementation composeBom
     androidTestImplementation composeBom
