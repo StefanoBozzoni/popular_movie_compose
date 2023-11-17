@@ -1,4 +1,4 @@
-package com.example.mycomposem3playground.domain.repository
+package com.example.mycomposem3playground.data.repository
 
 import androidx.paging.Pager
 import androidx.paging.PagingConfig

@@ -1,4 +1,4 @@
-package com.example.mycomposem3playground.domain.repository
+package com.example.mycomposem3playground.data.repository
 
 import androidx.paging.PagingData
 import com.example.mycomposem3playground.data.local.model.FavoritesItem

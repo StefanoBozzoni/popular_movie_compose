@@ -3,8 +3,8 @@ package com.example.mycomposem3playground.cdi
 import com.example.mycomposem3playground.cdi.EnvironmentConfig.BASE_DOMAIN
 import com.example.mycomposem3playground.cdi.EnvironmentConfig.allowedSSlFingerprints
 import com.example.mycomposem3playground.data.local.LocalDataSource
-import com.example.mycomposem3playground.domain.repository.IRepository
-import com.example.mycomposem3playground.domain.repository.Repository
+import com.example.mycomposem3playground.data.repository.IRepository
+import com.example.mycomposem3playground.data.repository.Repository
 import com.example.mycomposem3playground.setup.AppServiceFactory
 import com.example.mycomposem3playground.setup.HttpClientFactory
 import com.example.mycomposem3playground.setup.ServiceFactory
