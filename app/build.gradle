@@ -111,5 +111,5 @@ dependencies {
     // To use Kotlin annotation processing tool (kapt)
     kapt "androidx.room:room-compiler:${libVersions.room}"
 
-
+    implementation project(':app:domainmodule')
 }
