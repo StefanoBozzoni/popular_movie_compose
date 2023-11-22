@@ -28,15 +28,7 @@ android {
 }
 
 dependencies {
-    //implementation 'androidx.core:core-ktx:1.8.21'
-
-    implementation 'io.insert-koin:koin-androidx-compose:3.4.3'
-    implementation(project(':app:datamodule')) {
-        exclude group:"com.example.datamodule", module:':app:datamodule'
-    }
+    implementation "io.insert-koin:koin-androidx-compose:${libVersions.koin_version}"
+    implementation project(':app:datamodule')
     implementation project(':app:domainmodule')
-
-    implementation "androidx.room:room-runtime:${libVersions.room}"
-    annotationProcessor "androidx.room:room-compiler:${libVersions.room}"
-    implementation "androidx.room:room-ktx:${libVersions.room}"
 }

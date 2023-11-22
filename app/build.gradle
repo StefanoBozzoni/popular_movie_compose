@@ -88,7 +88,7 @@ dependencies {
     implementation 'androidx.compose.runtime:runtime-livedata'
 
     implementation 'io.coil-kt:coil-compose:2.4.0'
-    implementation 'io.insert-koin:koin-androidx-compose:3.4.3'
+    implementation "io.insert-koin:koin-androidx-compose:${libVersions.koin_version}"
 
     implementation 'androidx.paging:paging-common-ktx:3.1.1'
     implementation "androidx.paging:paging-runtime:3.1.1"

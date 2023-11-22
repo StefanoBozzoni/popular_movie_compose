@@ -1,4 +1,4 @@
-package com.example.mycomposem3playground.domain.model
+package com.example.domainmodule.model
 
 import com.example.domainmodule.dtos.Movie
 import com.example.domainmodule.dtos.Review

@@ -1,4 +1,4 @@
-package com.example.mycomposem3playground.domain.interactors
+package com.example.domainmodule.interactors
 
 import com.example.domainmodule.IRepository
 import com.example.domainmodule.model.FavoritesItem

@@ -10,10 +10,10 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.example.domainmodule.dtos.Movie
 import com.example.domainmodule.model.FavoritesItem
-import com.example.mycomposem3playground.domain.interactors.GetMoviesUC
-import com.example.mycomposem3playground.domain.interactors.GetSingleMovieUC
-import com.example.mycomposem3playground.domain.interactors.UpdateFavorites
-import com.example.mycomposem3playground.domain.model.MovieDetailInfo
+import com.example.domainmodule.interactors.GetMoviesUC
+import com.example.domainmodule.interactors.GetSingleMovieUC
+import com.example.domainmodule.interactors.UpdateFavorites
+import com.example.domainmodule.model.MovieDetailInfo
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -25,7 +25,7 @@ class MainViewModel(
     val getSingleMovieUseCase: GetSingleMovieUC,
     val updateFavMovieUC: UpdateFavorites,
 
-): ViewModel() {
+    ): ViewModel() {
     var pageFlow by mutableStateOf<Flow<PagingData<Movie>>>(flowOf())
         private set
 

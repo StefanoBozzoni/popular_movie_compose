@@ -73,7 +73,7 @@ import com.example.mycomposem3playground.W185
 import com.example.mycomposem3playground.W500
 import com.example.mycomposem3playground.YOUTUBE_TN_URL
 import com.example.mycomposem3playground.YOUTUBE_TRAILERS_URL
-import com.example.mycomposem3playground.domain.model.MovieDetailInfo
+import com.example.domainmodule.model.MovieDetailInfo
 import com.example.mycomposem3playground.presentation.ui.theme.PopularMovieComposeTheme
 import org.koin.androidx.compose.koinViewModel
 import java.text.SimpleDateFormat

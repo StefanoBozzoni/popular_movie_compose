@@ -1,7 +1,7 @@
-package com.example.mycomposem3playground.domain.interactors
+package com.example.domainmodule.interactors
 
 import com.example.domainmodule.IRepository
-import com.example.mycomposem3playground.domain.model.MovieDetailInfo
+import com.example.domainmodule.model.MovieDetailInfo
 
 class GetSingleMovieUC(private val remoteRepository: IRepository) {
     suspend fun execute(params: Params): MovieDetailInfo {
