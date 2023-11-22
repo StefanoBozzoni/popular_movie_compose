@@ -16,3 +16,4 @@ rootProject.name = "PopularMovieCompose"
 include ':app'
 include ':app:datamodule'
 include ':app:domainmodule'
+include ':app:bridge_di_module'

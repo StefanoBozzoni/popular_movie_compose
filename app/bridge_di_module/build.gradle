@@ -1,0 +1,42 @@
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+}
+
+android {
+    namespace 'com.example.bridge_di_module'
+    compileSdk 33
+
+    defaultConfig {
+        minSdk 24
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+dependencies {
+    //implementation 'androidx.core:core-ktx:1.8.21'
+
+    implementation 'io.insert-koin:koin-androidx-compose:3.4.3'
+    implementation(project(':app:datamodule')) {
+        exclude group:"com.example.datamodule", module:':app:datamodule'
+    }
+    implementation project(':app:domainmodule')
+
+    implementation "androidx.room:room-runtime:${libVersions.room}"
+    annotationProcessor "androidx.room:room-compiler:${libVersions.room}"
+    implementation "androidx.room:room-ktx:${libVersions.room}"
+}

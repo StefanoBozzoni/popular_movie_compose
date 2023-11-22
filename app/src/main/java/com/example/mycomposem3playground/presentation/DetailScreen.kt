@@ -2,9 +2,7 @@ package com.example.mycomposem3playground.presentation
 
 import android.content.Intent
 import android.net.Uri
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
@@ -28,7 +26,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.ripple.rememberRipple
-import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -54,7 +51,6 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -66,22 +62,19 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
 import androidx.core.content.ContextCompat.startActivity
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import coil.size.Size
+import com.example.domainmodule.dtos.Movie
+import com.example.domainmodule.model.FavoritesItem
 import com.example.mycomposem3playground.POSTER_BASE_URL
 import com.example.mycomposem3playground.R
-import com.example.mycomposem3playground.Routes
 import com.example.mycomposem3playground.W185
 import com.example.mycomposem3playground.W500
 import com.example.mycomposem3playground.YOUTUBE_TN_URL
 import com.example.mycomposem3playground.YOUTUBE_TRAILERS_URL
-import com.example.mycomposem3playground.data.local.model.FavoritesItem
-import com.example.mycomposem3playground.data.remote.dtos.Movie
 import com.example.mycomposem3playground.domain.model.MovieDetailInfo
 import com.example.mycomposem3playground.presentation.ui.theme.PopularMovieComposeTheme
-import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 import java.text.SimpleDateFormat
 import java.util.Locale

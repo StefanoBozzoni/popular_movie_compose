@@ -17,7 +17,7 @@ android {
         targetSdk 33
         versionCode 1
         versionName "1.0"
-        buildConfigField "String", "IMDB_API_KEY", "\"${properties.getProperty('IMDB_API_KEY')}\""
+        //buildConfigField "String", "IMDB_API_KEY", "\"${properties.getProperty('IMDB_API_KEY')}\""
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -70,10 +70,6 @@ dependencies {
     androidTestImplementation 'androidx.compose.ui:ui-test-junit4'
     debugImplementation 'androidx.compose.ui:ui-test-manifest'
 
-    implementation 'androidx.paging:paging-common-ktx:3.1.1'
-    implementation "androidx.paging:paging-runtime:3.1.1"
-    implementation "androidx.paging:paging-compose:3.2.0-rc01"
-
     implementation "androidx.navigation:navigation-compose:2.6.0"
 
     // Optional - Included automatically by material, only add when you need
@@ -90,26 +86,16 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1' //necessary for viewmodelScope
     implementation "androidx.lifecycle:lifecycle-runtime-compose:2.6.1" //necessary for collectAsStateWithLifeCycle
     implementation 'androidx.compose.runtime:runtime-livedata'
-    //implementation 'androidx.compose.runtime:runtime-ktx:2.6.1'
-    /*
-    implementation 'androidx.compose.runtime:runtime-livedata'
-     */
 
     implementation 'io.coil-kt:coil-compose:2.4.0'
-
-    //implementation 'org.koin:koin-core:1.0.2'  //3.4.0
-    //implementation 'org.koin:koin-android-viewmodel:1.0.2'
     implementation 'io.insert-koin:koin-androidx-compose:3.4.3'
-    api "com.squareup.retrofit2:retrofit:${libVersions.retrofit}"
-    api "com.squareup.retrofit2:converter-gson:${libVersions.retrofit}"
-    api "com.squareup.okhttp3:okhttp:${libVersions.okHttp}"
-    api "com.squareup.okhttp3:logging-interceptor:${libVersions.okHttp}"
 
-    implementation "androidx.room:room-runtime:${libVersions.room}"
-    annotationProcessor "androidx.room:room-compiler:${libVersions.room}"
-    implementation "androidx.room:room-ktx:${libVersions.room}"
-    // To use Kotlin annotation processing tool (kapt)
-    kapt "androidx.room:room-compiler:${libVersions.room}"
+    implementation 'androidx.paging:paging-common-ktx:3.1.1'
+    implementation "androidx.paging:paging-runtime:3.1.1"
+    implementation "androidx.paging:paging-compose:3.2.0-rc01"
 
     implementation project(':app:domainmodule')
+    implementation(project(':app:bridge_di_module')) {
+        exclude group:"com.example.datamodule", module:':app:datamodule'
+    }
 }

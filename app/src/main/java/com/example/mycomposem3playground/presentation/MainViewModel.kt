@@ -8,8 +8,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.example.mycomposem3playground.data.local.model.FavoritesItem
-import com.example.mycomposem3playground.data.remote.dtos.Movie
+import com.example.domainmodule.dtos.Movie
+import com.example.domainmodule.model.FavoritesItem
 import com.example.mycomposem3playground.domain.interactors.GetMoviesUC
 import com.example.mycomposem3playground.domain.interactors.GetSingleMovieUC
 import com.example.mycomposem3playground.domain.interactors.UpdateFavorites

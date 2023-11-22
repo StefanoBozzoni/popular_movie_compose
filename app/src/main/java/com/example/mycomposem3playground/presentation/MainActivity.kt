@@ -59,7 +59,7 @@ import com.example.mycomposem3playground.POSTER_BASE_URL
 import com.example.mycomposem3playground.R
 import com.example.mycomposem3playground.Routes
 import com.example.mycomposem3playground.W185
-import com.example.mycomposem3playground.data.remote.dtos.Movie
+import com.example.domainmodule.dtos.Movie
 import com.example.mycomposem3playground.presentation.ui.theme.PopularMovieComposeTheme
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel

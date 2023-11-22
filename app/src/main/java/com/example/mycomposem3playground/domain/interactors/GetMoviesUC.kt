@@ -1,8 +1,8 @@
 package com.example.mycomposem3playground.domain.interactors
 
 import androidx.paging.PagingData
-import com.example.mycomposem3playground.data.remote.dtos.Movie
-import com.example.mycomposem3playground.data.repository.IRepository
+import com.example.domainmodule.IRepository
+import com.example.domainmodule.dtos.Movie
 import kotlinx.coroutines.flow.Flow
 
 class GetMoviesUC(private val remoteRepository: IRepository) {

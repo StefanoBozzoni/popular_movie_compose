@@ -1,8 +1,7 @@
 package com.example.mycomposem3playground.domain.interactors
 
-import com.example.mycomposem3playground.data.local.model.FavoritesItem
-import com.example.mycomposem3playground.domain.model.MovieDetailInfo
-import com.example.mycomposem3playground.data.repository.IRepository
+import com.example.domainmodule.IRepository
+import com.example.domainmodule.model.FavoritesItem
 
 class UpdateFavorites(private val repository: IRepository) {
     suspend fun execute(params: Params) {
