@@ -1,4 +1,4 @@
-package com.example.domainmodule.dtos
+package com.example.domainmodule.model
 
 data class VideoCatalog(
     val id: Int,

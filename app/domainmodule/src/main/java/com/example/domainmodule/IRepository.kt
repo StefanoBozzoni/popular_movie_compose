@@ -1,9 +1,9 @@
 package com.example.domainmodule
 
 import androidx.paging.PagingData
-import com.example.domainmodule.dtos.Movie
-import com.example.domainmodule.dtos.ReviewsCatalog
-import com.example.domainmodule.dtos.VideoCatalog
+import com.example.domainmodule.model.Movie
+import com.example.domainmodule.model.ReviewsCatalog
+import com.example.domainmodule.model.VideoCatalog
 import com.example.domainmodule.model.FavoritesItem
 import kotlinx.coroutines.flow.Flow
 

@@ -65,7 +65,7 @@ import androidx.core.content.ContextCompat.startActivity
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import coil.size.Size
-import com.example.domainmodule.dtos.Movie
+import com.example.domainmodule.model.Movie
 import com.example.domainmodule.model.FavoritesItem
 import com.example.mycomposem3playground.POSTER_BASE_URL
 import com.example.mycomposem3playground.R
@@ -84,18 +84,18 @@ import java.util.Locale
 fun DetailScreen(viewModelInstance: MainViewModel = koinViewModel(), movieId: Int, onNavBack: () -> Unit) {
 
     /*
-    per chiamare un servizio:, primo metodo:
-    viewModelInstance.getSingleMovie(movieId)  //non è necessario lanciarla da dentro LaunchedEffect
+    to call the service, first method:
+    viewModelInstance.getSingleMovie(movieId)  //it is not necessary to launch it inside LaunchedEffect
     val result by viewModelInstance.movie.collectAsStateWithLifecycle()
     DetailContent(result)
 
-    //alternativamente , equivalentemente (che viene però modificata solo quando il value cambia)
+    //alternatively (the state changes only if it is modified)
     val movie by derivedStateOf {
         viewModelInstance.movie.collectAsStateWithLifecycle().value
     }
     */
 
-    //per chiamare un servizio, secondo metodo, usando produceState per chiamare una funzione sospesa:
+    //to call the service, second method, using produceState to call a sospending function:
     val movieDetailInfo by produceState<MovieDetailInfo?>(initialValue = null) {
         value = viewModelInstance.suspendGetSingleMovie(movieId)
     }

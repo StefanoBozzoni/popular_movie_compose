@@ -8,7 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.example.domainmodule.dtos.Movie
+import com.example.domainmodule.model.Movie
 import com.example.domainmodule.model.FavoritesItem
 import com.example.domainmodule.interactors.GetMoviesUC
 import com.example.domainmodule.interactors.GetSingleMovieUC
@@ -44,7 +44,6 @@ class MainViewModel(
 
     fun resetFlow() {
         _moviesList =  MutableStateFlow(PagingData.empty<Movie>())
-        Log.d("XDEBUG", _moviesList.toString())
     }
 
     fun getMovies(selection: Int) {

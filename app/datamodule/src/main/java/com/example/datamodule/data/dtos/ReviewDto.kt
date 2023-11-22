@@ -1,8 +1,8 @@
-package com.example.domainmodule.dtos
+package com.example.datamodule.data.dtos
 
-data class Review(
+data class ReviewDto(
     val author: String,
-    val author_details: AuthorDetails,
+    val author_details: AuthorDetailsDto,
     val content: String,
     val created_at: String,
     val id: String,

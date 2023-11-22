@@ -4,9 +4,10 @@ import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.example.datamodule.data.local.LocalDataSource
+import com.example.datamodule.data.mapper.toDomain
 import com.example.datamodule.data.remote.AppService
-import com.example.domainmodule.dtos.Movie
-import com.example.domainmodule.dtos.emptyMovie
+import com.example.domainmodule.model.Movie
+import com.example.domainmodule.model.emptyMovie
 
 class MoviesPagingSource(
     private val appService: AppService,
@@ -24,10 +25,10 @@ class MoviesPagingSource(
         return try {
 
             val page = params.key ?: 1
-            Log.d("XDEBUG", "page num $page, selection $selection")
+            //Log.d("XDEBUG", "page num $page, selection $selection")
             val movieList = when (selection) {
-                0 -> appService.getMovies(pageNum = page).body()?.results ?: emptyList()
-                1 -> appService.getTopRatedMovies(pageNum = page).body()?.results ?: emptyList()
+                0 -> appService.getMovies(pageNum = page).body()?.results?.map { it.toDomain() } ?: emptyList()
+                1 -> appService.getTopRatedMovies(pageNum = page).body()?.results?.map{ it.toDomain() } ?: emptyList()
                 2 -> if (page == 1) localDataSource.getFavoriteMovies()?.map { emptyMovie.copy(id = it.id, poster_path = it.posterPath) }?.toList() ?: emptyList() else emptyList()
                 else -> emptyList()
             }
