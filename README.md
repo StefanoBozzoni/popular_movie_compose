@@ -10,7 +10,7 @@ It's made with kotlin and jetpack Compose for Android
 **Retrofit** (rest library)  
 **Jetpack Paging Library** (infinite scrolling grid)  
 **Koin compose** (dependency injection for compose)  
-**Koin multi-module** (dependency injection and clean code, see the "koin_multi_module" branch)  
+**Koin multi-module** (dependency injection, see the "koin_multi_module" branch)  
 **Hilt** (dependency injection, see "hiltversion" branch)  
 **Room** (for storage)  
 **Coil** (for displaying images)
