@@ -1,8 +1,8 @@
 # Popular Movies Kotlin + Jepack compose
 IMDB movies browser written in kotlin + jepack compose  
 new: added hilt and koin multi module branches
-[related medium article](https://medium.com/@StefanoBozzoni/mastering-multi-tab-data-display-with-jetpack-paging-and-compose-57acf070a976)
-[related medium article for clean code and koin multi module](https://medium.com/@StefanoBozzoni/clean-code-multi-module-architecture-with-koin-9a40a96bc58b)
+[related medium article](https://medium.com/@StefanoBozzoni/mastering-multi-tab-data-display-with-jetpack-paging-and-compose-57acf070a976)  
+[related medium article for clean code and koin multi module](https://medium.com/@StefanoBozzoni/clean-code-multi-module-architecture-with-koin-9a40a96bc58b)  
 
 This is the famous "popular movie" app useful to browse IMDB movies.
 It's made with kotlin and jetpack Compose for Android
