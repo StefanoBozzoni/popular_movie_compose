@@ -6,13 +6,14 @@ import androidx.paging.PagingData
 import com.example.datamodule.data.local.LocalDataSource
 import com.example.datamodule.data.local.model.FavoritesItem
 import com.example.datamodule.data.mapper.toDomain
+import com.example.datamodule.data.pagination.MoviesPagingSource
+import com.example.datamodule.data.remote.RemoteDataSource
 import com.example.domainmodule.IRepository
 import com.example.domainmodule.model.Movie
 import com.example.domainmodule.model.ReviewsCatalog
 import com.example.domainmodule.model.VideoCatalog
-import com.example.datamodule.data.pagination.MoviesPagingSource
-import com.example.datamodule.data.remote.RemoteDataSource
 import kotlinx.coroutines.flow.Flow
+
 class Repository(private val remoteDataSource: RemoteDataSource, private val localDataSource: LocalDataSource): IRepository {
 
     override suspend fun getMoviesCatalog(numPage: Int?): List<Movie> {
