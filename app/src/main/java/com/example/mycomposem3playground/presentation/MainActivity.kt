@@ -146,11 +146,11 @@ fun MainScreen(viewModelInstance: MainViewModel = koinViewModel(), onMovieClicke
             selection *= 1  //force the recomposition of this widget when selection changes
             val movies: LazyPagingItems<Movie> = viewModelInstance.moviesList.collectAsLazyPagingItems()
 
-            //alternativamente :
-            //val movies: LazyPagingItems<Movie> = viewModelInstance.getMovies2(selection).collectAsLazyPagingItems()
-            //però questa istruzione quando si ruota lo schermo viene rieseguita ogni volta
+            // alternately :
+            // val movies: LazyPagingItems<Movie> = viewModelInstance.getMovies2(selection).collectAsLazyPagingItems()
+            // but if you set this instruction here gets re executed on configuration changes (screen rotation)
 
-            // se non dovessi estrarre dati paginati farei:
+            // if data was not paginated we should do
             // val movies: LazyPagingItems<Movie> = viewModelInstance.movies.collectAsState()
 
             Surface(color = MaterialTheme.colorScheme.background, modifier = Modifier.padding(innerPadding)) {

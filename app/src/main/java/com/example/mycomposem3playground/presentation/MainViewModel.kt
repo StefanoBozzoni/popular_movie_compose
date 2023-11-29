@@ -53,8 +53,8 @@ class MainViewModel(
         }
     }
 
-    //anche questo funziona e non coinvolge l'uso di un altro MutableStateFlow
-    fun getMovies2(selection: Int): Flow<PagingData<Movie>> {  //ritorna un flow
+    //this also works and doesn't need another flow
+    fun getMovies2(selection: Int): Flow<PagingData<Movie>> {  //returns a flow
         return getMoviesUseCase.execute(GetMoviesUC.Params(selection = selection)).cachedIn(viewModelScope)
     }
 
