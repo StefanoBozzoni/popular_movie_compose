@@ -1,6 +1,5 @@
 package com.example.mycomposem3playground.presentation
 
-import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -8,11 +7,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.example.domainmodule.model.Movie
-import com.example.domainmodule.model.FavoritesItem
 import com.example.domainmodule.interactors.GetMoviesUC
 import com.example.domainmodule.interactors.GetSingleMovieUC
 import com.example.domainmodule.interactors.UpdateFavorites
+import com.example.domainmodule.model.FavoritesItem
+import com.example.domainmodule.model.Movie
 import com.example.domainmodule.model.MovieDetailInfo
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
