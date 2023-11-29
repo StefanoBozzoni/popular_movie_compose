@@ -30,7 +30,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -61,7 +60,6 @@ import com.example.mycomposem3playground.Routes
 import com.example.mycomposem3playground.W185
 import com.example.domainmodule.model.Movie
 import com.example.mycomposem3playground.presentation.ui.theme.PopularMovieComposeTheme
-import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 
 class MainActivity : ComponentActivity() {
@@ -109,7 +107,6 @@ fun getActionIconColor(guard: Boolean): Color {
 fun MainScreen(viewModelInstance: MainViewModel = koinViewModel(), onMovieClicked: (Int) -> Unit) {
 
     var selection: Int by rememberSaveable { mutableStateOf(0) }
-    val coroutineScope = rememberCoroutineScope()
     val listState = rememberLazyGridState()
     
     Scaffold(
@@ -127,11 +124,8 @@ fun MainScreen(viewModelInstance: MainViewModel = koinViewModel(), onMovieClicke
                         }
                         IconButton(onClick = {
                             selection = 1
-                            coroutineScope.launch {
-                                //listState.scrollToItem(0)
-                                viewModelInstance.resetFlow()
-                                viewModelInstance.getMovies(selection)
-                            }
+                            viewModelInstance.resetFlow()
+                            viewModelInstance.getMovies(selection)
                         }) {
                             ActionIcon(vectorDrawable = ImageVector.vectorResource(id = R.drawable.ic_top_rated_svg), description = "top", tint = getActionIconColor(selection == 1))
                         }
@@ -171,18 +165,6 @@ fun MainScreen(viewModelInstance: MainViewModel = koinViewModel(), onMovieClicke
                         }
                     }
                 }
-
-                /* example lazycolumn con paging data
-                LazyColumn {
-                    items(count = movies.itemCount) { index ->
-                        val item = movies[index]
-                        item?.let {
-                            MovieItem(item)
-                        }
-                    }
-                }
-                */
-
             }
         }
     )
