@@ -1,4 +1,4 @@
-package com.example.mycomposem3playground.cdi
+package com.example.bridge_di_module
 
 import com.example.domainmodule.interactors.GetMoviesUC
 import com.example.domainmodule.interactors.GetSingleMovieUC

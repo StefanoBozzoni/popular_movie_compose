@@ -2,32 +2,36 @@ package com.example.datamodule.data.repository
 
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
-import androidx.paging.PagingData
 import com.example.datamodule.data.local.LocalDataSource
 import com.example.datamodule.data.local.model.FavoritesItem
 import com.example.datamodule.data.mapper.toDomain
 import com.example.datamodule.data.pagination.MoviesPagingSource
 import com.example.datamodule.data.remote.RemoteDataSource
 import com.example.domainmodule.IRepository
+import com.example.domainmodule.model.IDataProvider
 import com.example.domainmodule.model.Movie
 import com.example.domainmodule.model.ReviewsCatalog
 import com.example.domainmodule.model.VideoCatalog
-import kotlinx.coroutines.flow.Flow
 
-class Repository(private val remoteDataSource: RemoteDataSource, private val localDataSource: LocalDataSource): IRepository {
+class Repository(private val remoteDataSource: RemoteDataSource, private val localDataSource: LocalDataSource) : IRepository {
 
     override suspend fun getMoviesCatalog(numPage: Int?): List<Movie> {
         return remoteDataSource.appService.getMovies(numPage).body()?.results?.map { it.toDomain() } ?: emptyList()
     }
 
-    override fun getMovies(selection: Int): Flow<PagingData<Movie>> {
-        return Pager(
-            config = PagingConfig(pageSize = 20),
-            pagingSourceFactory = {
-                MoviesPagingSource(remoteDataSource.appService, localDataSource, selection)
-            }
-        ).flow
+    @Suppress("UNCHECKED_CAST")
+    override fun <T : Any> getMovies(selection: Int): IDataProvider<T> {
+        val myDataProvider: IDataProvider<T> = DatProviderImpl()
+        myDataProvider.setMyData(
+            Pager(
+                config = PagingConfig(pageSize = 20),
+                pagingSourceFactory = {
+                    MoviesPagingSource(remoteDataSource.appService, localDataSource, selection)
+                }
+            ).flow as T)
+        return myDataProvider
     }
+
 
     override suspend fun getSingleMovie(id: Int): Movie {
         return remoteDataSource.appService.getSingleMovie(id).body()?.toDomain()!!

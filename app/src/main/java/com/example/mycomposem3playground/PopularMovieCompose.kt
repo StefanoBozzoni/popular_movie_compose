@@ -1,7 +1,7 @@
 package com.example.mycomposem3playground
 
 import android.app.Application
-import com.example.mycomposem3playground.cdi.domainModule
+import com.example.bridge_di_module.domainModule
 import com.example.bridge_di_module.remoteModule
 import com.example.mycomposem3playground.cdi.viewModelModule
 import localModule
