@@ -5,9 +5,9 @@ import com.example.mycomposem3playground.cdi.EnvironmentConfig.allowedSSlFingerp
 import com.example.mycomposem3playground.data.local.LocalDataSource
 import com.example.mycomposem3playground.data.repository.IRepository
 import com.example.mycomposem3playground.data.repository.Repository
-import com.example.mycomposem3playground.setup.AppServiceFactory
-import com.example.mycomposem3playground.setup.HttpClientFactory
-import com.example.mycomposem3playground.setup.ServiceFactory
+import com.example.mycomposem3playground.data.setup.AppServiceFactory
+import com.example.mycomposem3playground.data.setup.HttpClientFactory
+import com.example.mycomposem3playground.data.setup.ServiceFactory
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 

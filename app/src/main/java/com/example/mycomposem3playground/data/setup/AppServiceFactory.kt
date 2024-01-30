@@ -1,4 +1,4 @@
-package com.example.mycomposem3playground.setup
+package com.example.mycomposem3playground.data.setup
 
 import com.example.mycomposem3playground.data.remote.AppService
 
