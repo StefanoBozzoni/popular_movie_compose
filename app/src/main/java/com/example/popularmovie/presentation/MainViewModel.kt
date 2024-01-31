@@ -1,4 +1,4 @@
-package com.example.mycomposem3playground.presentation
+package com.example.popularmovie.presentation
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf

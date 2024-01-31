@@ -1,4 +1,4 @@
-package com.example.mycomposem3playground.presentation
+package com.example.popularmovie.presentation
 
 import android.content.Intent
 import android.net.Uri
@@ -30,7 +30,6 @@ import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MaterialTheme.colorScheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
@@ -42,7 +41,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -65,16 +63,16 @@ import androidx.core.content.ContextCompat.startActivity
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import coil.size.Size
-import com.example.domainmodule.model.Movie
 import com.example.domainmodule.model.FavoritesItem
-import com.example.mycomposem3playground.POSTER_BASE_URL
-import com.example.mycomposem3playground.R
-import com.example.mycomposem3playground.W185
-import com.example.mycomposem3playground.W500
-import com.example.mycomposem3playground.YOUTUBE_TN_URL
-import com.example.mycomposem3playground.YOUTUBE_TRAILERS_URL
+import com.example.domainmodule.model.Movie
 import com.example.domainmodule.model.MovieDetailInfo
-import com.example.mycomposem3playground.presentation.ui.theme.PopularMovieComposeTheme
+import com.example.popularmovie.POSTER_BASE_URL
+import com.example.popularmovie.R
+import com.example.popularmovie.W185
+import com.example.popularmovie.W500
+import com.example.popularmovie.YOUTUBE_TN_URL
+import com.example.popularmovie.YOUTUBE_TRAILERS_URL
+import com.example.popularmovie.presentation.ui.theme.PopularMovieComposeTheme
 import org.koin.androidx.compose.koinViewModel
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -133,11 +131,10 @@ fun DetailContent(movieDetailInfo: MovieDetailInfo?, paddingValues: PaddingValue
     val myMovie = movieDetailInfo.movie
     val url = POSTER_BASE_URL +W500+myMovie.backdrop_path
     val url2 = POSTER_BASE_URL +W185+myMovie.poster_path
-    val coroutineScope = rememberCoroutineScope()
 
-    Surface(color = MaterialTheme.colorScheme.background, modifier = Modifier.padding(paddingValues)) {
+    Surface(color = colorScheme.background, modifier = Modifier.padding(paddingValues)) {
         Column(
-            modifier= Modifier.verticalScroll(state = rememberScrollState(), enabled = true)
+            modifier = Modifier.verticalScroll(state = rememberScrollState(), enabled = true)
         ) {
             Box(
                 Modifier
@@ -280,7 +277,7 @@ fun DetailContent(movieDetailInfo: MovieDetailInfo?, paddingValues: PaddingValue
                             .build()
                     Box(contentAlignment = Alignment.Center,
                     modifier = Modifier.clickable {
-                        val trailersUrl = YOUTUBE_TRAILERS_URL+it.key;
+                        val trailersUrl = YOUTUBE_TRAILERS_URL + it.key
                         val i = Intent(Intent.ACTION_VIEW, Uri.parse(trailersUrl))
                         //i.data = Uri.parse(trailersUrl)
                         startActivity(context, i, null)
@@ -338,7 +335,7 @@ fun DetailContent(movieDetailInfo: MovieDetailInfo?, paddingValues: PaddingValue
                         modifier = Modifier
                             .padding(horizontal = 8.dp)
                             .clickable {
-                                val reviewsUrl = movieDetailInfo.review[i].url;
+                                val reviewsUrl = movieDetailInfo.review[i].url
                                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse(reviewsUrl))
                                 startActivity(context, intent, null)
                             }

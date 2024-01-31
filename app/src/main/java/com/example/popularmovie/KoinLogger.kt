@@ -1,4 +1,4 @@
-package com.example.mycomposem3playground
+package com.example.popularmovie
 
 import android.util.Log
 import org.koin.core.logger.Level

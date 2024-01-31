@@ -1,9 +1,9 @@
-package com.example.mycomposem3playground
+package com.example.popularmovie
 
 import android.app.Application
 import com.example.bridge_di_module.domainModule
 import com.example.bridge_di_module.remoteModule
-import com.example.mycomposem3playground.cdi.viewModelModule
+import com.example.popularmovie.cdi.viewModelModule
 import localModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.GlobalContext.startKoin

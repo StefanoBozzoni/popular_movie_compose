@@ -1,4 +1,4 @@
-package com.example.mycomposem3playground
+package com.example.popularmovie
 
 const val POSTER_BASE_URL = "https://image.tmdb.org/t/p/"
 const val YOUTUBE_TN_URL  = "https://img.youtube.com/vi/"

@@ -1,4 +1,4 @@
-package com.example.mycomposem3playground.presentation.ui.theme
+package com.example.popularmovie.presentation.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

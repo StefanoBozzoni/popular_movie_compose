@@ -1,4 +1,4 @@
-package com.example.mycomposem3playground.presentation.ui.theme
+package com.example.popularmovie.presentation.ui.theme
 
 import android.app.Activity
 import android.os.Build

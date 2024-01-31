@@ -1,4 +1,4 @@
-package com.example.mycomposem3playground.presentation
+package com.example.popularmovie.presentation
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.material.icons.Icons

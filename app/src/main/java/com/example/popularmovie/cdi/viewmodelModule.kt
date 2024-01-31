@@ -1,6 +1,6 @@
-package com.example.mycomposem3playground.cdi
+package com.example.popularmovie.cdi
 
-import com.example.mycomposem3playground.presentation.MainViewModel
+import com.example.popularmovie.presentation.MainViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 

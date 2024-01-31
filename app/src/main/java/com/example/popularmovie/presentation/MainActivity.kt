@@ -1,4 +1,4 @@
-package com.example.mycomposem3playground.presentation
+package com.example.popularmovie.presentation
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -54,12 +54,12 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import coil.size.Size
-import com.example.mycomposem3playground.POSTER_BASE_URL
-import com.example.mycomposem3playground.R
-import com.example.mycomposem3playground.Routes
-import com.example.mycomposem3playground.W185
 import com.example.domainmodule.model.Movie
-import com.example.mycomposem3playground.presentation.ui.theme.PopularMovieComposeTheme
+import com.example.popularmovie.POSTER_BASE_URL
+import com.example.popularmovie.R
+import com.example.popularmovie.Routes
+import com.example.popularmovie.W185
+import com.example.popularmovie.presentation.ui.theme.PopularMovieComposeTheme
 import org.koin.androidx.compose.koinViewModel
 
 class MainActivity : ComponentActivity() {

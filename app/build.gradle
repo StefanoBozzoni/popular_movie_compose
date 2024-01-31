@@ -5,14 +5,14 @@ plugins {
 }
 
 android {
-    namespace 'com.example.mycomposem3playground'
+    namespace 'com.example.popularmovie'
     compileSdk 33
 
     defaultConfig {
         Properties properties = new Properties()
         properties.load(project.rootProject.file('local.properties').newDataInputStream())
 
-        applicationId "com.example.mycomposem3playground"
+        applicationId "com.example.popularmovie"
         minSdk 24
         targetSdk 33
         versionCode 1

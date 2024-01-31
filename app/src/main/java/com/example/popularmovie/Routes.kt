@@ -1,4 +1,4 @@
-package com.example.mycomposem3playground
+package com.example.popularmovie
 
 sealed class Routes(val route: String) {
     object MainScreen: Routes("MainScreen")
