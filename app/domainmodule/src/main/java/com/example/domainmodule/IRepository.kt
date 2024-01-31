@@ -1,14 +1,15 @@
 package com.example.domainmodule
 
+import androidx.paging.PagingData
 import com.example.domainmodule.model.FavoritesItem
-import com.example.domainmodule.model.IDataProvider
 import com.example.domainmodule.model.Movie
 import com.example.domainmodule.model.ReviewsCatalog
 import com.example.domainmodule.model.VideoCatalog
+import kotlinx.coroutines.flow.Flow
 
 interface IRepository {
-    suspend fun getMoviesCatalog(numPage:Int?): List<Movie>
-    fun <T:Any> getMovies(selection: Int): IDataProvider<T>
+    suspend fun getMoviesCatalog(numPage: Int?): List<Movie>
+    fun getMovies(selection: Int): Flow<PagingData<Movie>>
     suspend fun getSingleMovie(id: Int): Movie
     suspend fun getMovieVideos(id: Int): VideoCatalog
     suspend fun getMovieReviews(id: Int): ReviewsCatalog

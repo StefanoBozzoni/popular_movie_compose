@@ -1,10 +1,12 @@
 package com.example.domainmodule.interactors
 
+import androidx.paging.PagingData
 import com.example.domainmodule.IRepository
-import com.example.domainmodule.model.IDataProvider
+import com.example.domainmodule.model.Movie
+import kotlinx.coroutines.flow.Flow
 
 class GetMoviesUC(private val repository: IRepository) {
-    fun <T : Any> execute(params: Params): IDataProvider<T> {
+    fun execute(params: Params): Flow<PagingData<Movie>> {
         return repository.getMovies(selection = params.selection)
     }
 

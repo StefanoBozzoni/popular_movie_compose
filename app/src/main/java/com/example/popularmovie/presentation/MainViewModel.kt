@@ -48,8 +48,7 @@ class MainViewModel(
     fun getMovies(selection: Int) {
         viewModelScope.launch {
             pageFlow = getMoviesUseCase
-                .execute<Flow<PagingData<Movie>>>(GetMoviesUC.Params(selection = selection))
-                .getMyData()
+                .execute(GetMoviesUC.Params(selection = selection))
                 .cachedIn(this)
             pageFlow.collect { _moviesList.value = it }
         }
@@ -58,8 +57,7 @@ class MainViewModel(
     //this also works and doesn't need another flow
     fun getMovies2(selection: Int): Flow<PagingData<Movie>> {  //returns a flow
         return getMoviesUseCase
-            .execute<Flow<PagingData<Movie>>>(GetMoviesUC.Params(selection = selection))
-            .getMyData()
+            .execute(GetMoviesUC.Params(selection = selection))
             .cachedIn(viewModelScope)
     }
 
